@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "IAANews.h"
+#import "IAANewsTableViewController.h"
 
 @interface AppDelegate ()
 
@@ -16,9 +18,39 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    
+    //Se crea una vista de tipo UIWindow
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
+    self.window.backgroundColor = [UIColor whiteColor];
+    
+    [self.window makeKeyAndVisible];
+    
+    
+    //creamos el modelo
+    
+    IAANews *model = [IAANews new];
+    
+    
+    //creamos el controlador
+    IAANewsTableViewController *uVC=[[IAANewsTableViewController alloc]initWithModel:model style:UITableViewStylePlain];
+    
+    //creamos el combinador
+    UINavigationController *uNav = [UINavigationController new];
+    [uNav pushViewController:uVC animated:NO];
+    
+
+    
+    //lo hacemos root
+    self.window.rootViewController=uNav;
+
+    
+       
     return YES;
 }
+
+
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
