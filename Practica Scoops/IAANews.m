@@ -52,7 +52,18 @@
     self.modelReviewed = [[NSMutableArray alloc]init];
     self.modelPublished = [[NSMutableArray alloc]init];
     
+    
+    
+    
     MSQuery *queryModel = [[MSQuery alloc]initWithTable:table];
+
+   // MSQuery *queryModel = [table query];
+    
+    
+    //queryModel.selectFields = @[@"id", @"__createdAt",@"__updatedAt" ,@"Titulo", @"noticia", @"Imagen", @"author"];
+
+    queryModel.selectFields = @[@"id",@"Titulo", @"noticia",@"author",@"status" ,@"__createdAt",@"__updatedAt"];
+
     [queryModel readWithCompletion:^(NSArray *items, NSInteger totalCount, NSError *error) {
     
 
@@ -60,8 +71,11 @@
         
         for (id item in items) {
             NSLog(@"item -> %@", item);
-            IAAOneNew *noticia = [[IAAOneNew alloc]initWithTitle:item[@"Titulo"] andID:item[@"id"] andPhoto:item[@"Imagen"] aText:item[@"noticia"] anAuthor:@"nil" aCoor:CLLocationCoordinate2DMake(0, 0)];
+           // IAAOneNew *noticia = [[IAAOneNew alloc]initWithTitle:item[@"Titulo"] andID:item[@"id"] andPhoto:item[@"Imagen"] aText:item[@"noticia"] anAuthor:@"nil" aCoor:
+           //                       CLLocationCoordinate2DMake(0, 0)];
             
+            
+            IAAOneNew *noticia = [[IAAOneNew alloc]initWithTitle:item[@"Titulo"] andID:item[@"id"] andPhoto:nil  aText:item[@"noticia"] andAuthor:item[@"author"] andCoor: CLLocationCoordinate2DMake(0, 0) andCreationDate:item[@"__createdAt"]  andModificationDate:item[@"__updatedAt"] ];
             
             
             NSString* status = item[@"status"];

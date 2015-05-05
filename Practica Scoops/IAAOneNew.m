@@ -11,8 +11,15 @@
 
 @implementation IAAOneNew
 
-- (id)initWithTitle:(NSString*)title andID: (NSString *) ID andPhoto:(NSData *)img aText:(NSString*)text anAuthor:(NSString *)author aCoor:(CLLocationCoordinate2D) coors
-{
+- (id)initWithTitle:(NSString*)title
+              andID: (NSString *) ID
+           andPhoto:(NSData *)img
+              aText:(NSString*)text
+          andAuthor:(NSString *)author
+            andCoor:(CLLocationCoordinate2D) coors
+    andCreationDate:(NSDate *) creationDate
+andModificationDate:(NSDate *) modifDate
+{ 
     if (self = [super init]) {
         _id = ID;
         _title = title;
@@ -20,7 +27,8 @@
         _author = author;
         _coors = coors;
         _image = img;
-        _dateCreated = [NSDate date];
+        _dateCreated = creationDate;
+        _dateModif = modifDate;
     }
     
     return self;

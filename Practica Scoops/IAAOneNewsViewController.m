@@ -37,6 +37,18 @@
     self.tituloNoticia.text = self.model.title;
     self.textoNoticia.text=self.model.text;
     self.imagenNoticia.image = self.model.imagenNoticia;
+    
+    
+    
+    
+    // Fechas
+    NSDateFormatter *fmt = [NSDateFormatter new];
+    fmt.dateStyle = NSDateFormatterShortStyle;
+    
+    self.labelFechaCreacion.text = [fmt stringFromDate:self.model.dateCreated];
+    self.labelFechaModificacion.text = [fmt stringFromDate:self.model.dateModif];
+    
+
     [self changeToNoEditMode];
     
     

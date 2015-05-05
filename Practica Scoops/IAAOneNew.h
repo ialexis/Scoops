@@ -12,7 +12,14 @@
 
 @interface IAAOneNew : NSObject
 
-- (id)initWithTitle:(NSString*)title andID: (NSString *) ID andPhoto:(NSData *)img aText:(NSString*)text anAuthor:(NSString *)author aCoor:(CLLocationCoordinate2D) coors;
+- (id)initWithTitle:(NSString*)title
+              andID: (NSString *) ID
+           andPhoto:(NSData *)img
+              aText:(NSString*)text
+          andAuthor:(NSString *)author
+            andCoor:(CLLocationCoordinate2D) coors
+    andCreationDate:(NSDate *) creationDate
+andModificationDate:(NSDate *) modifDate;
 
 @property (readonly) NSString *id;
 @property (strong, nonatomic) NSString *title;
@@ -21,6 +28,7 @@
 @property (nonatomic) CLLocationCoordinate2D coors;
 @property (strong, nonatomic) NSData *image;
 @property (readonly) NSDate *dateCreated;
+@property (readonly) NSDate *dateModif;
 @property (nonatomic, strong, readonly) UIImage *imagenNoticia;
 
 
