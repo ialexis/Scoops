@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Practica Scoops/IAANewsTableViewController.m"
-            timestampString = "452778348.534208"
+            timestampString = "452805572.338172"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "151"
-            endingLineNumber = "151"
+            startingLineNumber = "204"
+            endingLineNumber = "204"
             landmarkName = "-numberOfSectionsInTableView:"
             landmarkType = "5">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Practica Scoops/IAANewsTableViewController.m"
-            timestampString = "452778348.534208"
+            timestampString = "452815198.4106"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "181"
-            endingLineNumber = "181"
+            startingLineNumber = "238"
+            endingLineNumber = "238"
             landmarkName = "-tableView:numberOfRowsInSection:"
             landmarkType = "5">
          </BreakpointContent>
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Practica Scoops/IAANewsTableViewController.m"
-            timestampString = "452778348.534208"
+            timestampString = "452815198.4106"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "386"
-            endingLineNumber = "386"
+            startingLineNumber = "443"
+            endingLineNumber = "443"
             landmarkName = "-loginAppInViewController:withCompletion:"
             landmarkType = "5">
          </BreakpointContent>
@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Practica Scoops/IAANewsTableViewController.m"
-            timestampString = "452778348.534208"
+            timestampString = "452815198.4106"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "403"
-            endingLineNumber = "403"
+            startingLineNumber = "460"
+            endingLineNumber = "460"
             landmarkName = "-loadUserAuthInfo"
             landmarkType = "5">
          </BreakpointContent>
@@ -90,11 +90,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Practica Scoops/IAAOneNewsViewController.m"
-            timestampString = "452779705.813696"
+            timestampString = "452812258.228695"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "274"
-            endingLineNumber = "274"
+            startingLineNumber = "272"
+            endingLineNumber = "272"
             landmarkName = "-loadUserAuthInfo"
             landmarkType = "5">
          </BreakpointContent>

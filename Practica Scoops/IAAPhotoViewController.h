@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "IAAOneNew.h"
 
 
 @interface IAAPhotoViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
@@ -17,9 +18,9 @@
 - (IBAction)deletePhoto:(id)sender;
 
 
-@property(nonatomic, strong) UIImage *photo;
+@property(nonatomic, strong) IAAOneNew *model;
 
--(id) initWithImage:(UIImage*) imagen;
-
+//-(id) initWithImage:(UIImage*) imagen;
+-(id) initWithModel:(IAAOneNew*) model;
 
 @end

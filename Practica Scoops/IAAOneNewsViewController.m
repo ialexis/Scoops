@@ -39,7 +39,10 @@
     self.imagenNoticia.image = self.model.imagenNoticia;
     
     
+    //tap en foto
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectPhoto:)];
     
+    [self.imagenNoticia addGestureRecognizer:tap];
     
     // Fechas
     NSDateFormatter *fmt = [NSDateFormatter new];
@@ -178,18 +181,13 @@
 
 #pragma mark - Actions
 - (IBAction)displayPhoto:(id)sender {
-    /*   if (self.model.photo == nil)
-     {
-     self.model.photo = [IAAPhoto photoWithImage:nil context:self.model.managedObjectContext];
-     }
-     */
     
     
     // Crear un controlador de fotos
     IAAPhotoViewController *pVC = [[IAAPhotoViewController alloc]
-                                   initWithImage:self.imagenNoticia.image];
+                                   initWithModel:self.model];
     
-    // Push que te crió
+    // Push
     [self.navigationController pushViewController:pVC
                                          animated:YES];
     
@@ -275,5 +273,14 @@
     }
     
     return FALSE;
+}
+
+#pragma mark - Foto
+-(void) selectPhoto:(id) sender{
+    
+    
+    IAAPhotoViewController *photoVC = [[IAAPhotoViewController alloc] initWithModel:self.model];
+    
+    [self.navigationController pushViewController:photoVC animated:YES];
 }
 @end

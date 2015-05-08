@@ -12,6 +12,16 @@
 #import "IAAOneNew.h"
 #import "IAASettings.h"
 
+@interface IAANews ()
+{
+    MSClient * client;
+    MSTable *table;
+    NSString *userFBId;
+    NSString *tokenFB;
+}
+
+@end
+
 @implementation IAANews
 
 
@@ -42,10 +52,13 @@
 
 - (void)loadNewsFromAzure{
     
-    MSClient *  client = [MSClient clientWithApplicationURL:[NSURL URLWithString:AZUREMOBILESERVICE_ENDPOINT]
+    userFBId = [[NSUserDefaults standardUserDefaults]objectForKey:@"userID"];
+
+    
+     client = [MSClient clientWithApplicationURL:[NSURL URLWithString:AZUREMOBILESERVICE_ENDPOINT]
                                              applicationKey:AZUREMOBILESERVICE_APPKEY];
     
-    MSTable *table = [client tableWithName:@"news"];
+    table = [client tableWithName:@"news"];
     
 
     self.modelWrited = [[NSMutableArray alloc]init];
@@ -53,7 +66,7 @@
     self.modelPublished = [[NSMutableArray alloc]init];
     
     
-    
+    /*
     
     MSQuery *queryModel = [[MSQuery alloc]initWithTable:table];
 
@@ -107,7 +120,12 @@
 
             
         }
-        
+        */
+    
+    [self recoverPublishedNews];
+    [self recoverReviewedNews];
+    [self recoverWritenNews];
+    
         // Enviamos una notificación
         NSNotification *notification =
         [NSNotification notificationWithName: DID_NEW_NEWS_NOTIFICATION_NAME
@@ -117,10 +135,124 @@
         [[NSNotificationCenter defaultCenter] postNotification:notification];
         
 
-    }];
+ //   }];
     
     
 }
+
+-(void) recoverPublishedNews
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"status = 2"];
+    
+    MSQuery *queryModel = [[MSQuery alloc]initWithTable:table predicate:predicate];
+    
+    
+    queryModel.selectFields = @[@"id",@"Titulo", @"noticia",@"author",@"status" ,@"__createdAt",@"__updatedAt"];
+    
+    [queryModel readWithCompletion:^(NSArray *items, NSInteger totalCount, NSError *error)
+     {
+         for (id item in items)
+         {
+             NSLog(@"item -> %@", item);
+             
+             
+             IAAOneNew *noticia = [[IAAOneNew alloc]initWithTitle:item[@"Titulo"] andID:item[@"id"] andPhoto:nil  aText:item[@"noticia"] andAuthor:item[@"author"] andCoor: CLLocationCoordinate2DMake(0, 0) andStatus:item[@"status"] andCreationDate:item[@"__createdAt"]  andModificationDate:item[@"__updatedAt"] ];
+             
+             
+             [self.modelPublished addObject:noticia];
+             
+         }
+         // Enviamos una notificación
+         NSNotification *notification =
+         [NSNotification notificationWithName: DID_NEW_NEWS_NOTIFICATION_NAME
+                                       object:self
+                                     userInfo:nil];
+         
+         [[NSNotificationCenter defaultCenter] postNotification:notification];
+         
+         
+
+         
+     }];
+}
+
+-(void)recoverReviewedNews
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"author == %@ && status = 1", userFBId];
+
+    MSQuery *queryModel = [[MSQuery alloc]initWithTable:table predicate:predicate];
+    
+    
+    queryModel.selectFields = @[@"id",@"Titulo", @"noticia",@"author",@"status" ,@"__createdAt",@"__updatedAt"];
+    
+    [queryModel readWithCompletion:^(NSArray *items, NSInteger totalCount, NSError *error)
+    {
+        for (id item in items)
+        {
+            NSLog(@"item -> %@", item);
+            
+            
+            IAAOneNew *noticia = [[IAAOneNew alloc]initWithTitle:item[@"Titulo"] andID:item[@"id"] andPhoto:nil  aText:item[@"noticia"] andAuthor:item[@"author"] andCoor: CLLocationCoordinate2DMake(0, 0) andStatus:item[@"status"] andCreationDate:item[@"__createdAt"]  andModificationDate:item[@"__updatedAt"] ];
+            
+            
+            [self.modelReviewed addObject:noticia];
+            
+        }
+        // Enviamos una notificación
+        NSNotification *notification =
+        [NSNotification notificationWithName: DID_NEW_NEWS_NOTIFICATION_NAME
+                                      object:self
+                                    userInfo:nil];
+        
+        [[NSNotificationCenter defaultCenter] postNotification:notification];
+        
+        
+
+
+    }];
+}
+
+     
+-(void)recoverWritenNews
+{
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"author == %@ && status = 0", userFBId];
+    
+    MSQuery *queryModel = [[MSQuery alloc]initWithTable:table predicate:predicate];
+    
+    
+    queryModel.selectFields = @[@"id",@"Titulo", @"noticia",@"author",@"status" ,@"__createdAt",@"__updatedAt"];
+    
+    [queryModel readWithCompletion:^(NSArray *items, NSInteger totalCount, NSError *error)
+     {
+         for (id item in items)
+         {
+             NSLog(@"item -> %@", item);
+             
+             
+             IAAOneNew *noticia = [[IAAOneNew alloc]initWithTitle:item[@"Titulo"] andID:item[@"id"] andPhoto:nil  aText:item[@"noticia"] andAuthor:item[@"author"] andCoor: CLLocationCoordinate2DMake(0, 0) andStatus:item[@"status"] andCreationDate:item[@"__createdAt"]  andModificationDate:item[@"__updatedAt"] ];
+             
+             
+             [self.modelWrited addObject:noticia];
+             
+         }
+         // Enviamos una notificación
+         NSNotification *notification =
+         [NSNotification notificationWithName: DID_NEW_NEWS_NOTIFICATION_NAME
+                                       object:self
+                                     userInfo:nil];
+         
+         [[NSNotificationCenter defaultCenter] postNotification:notification];
+         
+         
+
+         
+     }];
+}
+
+
+
+
 #pragma mark - Accessors
 - (IAAOneNew *) newsPublishedAtIndex: (NSUInteger) index
 {

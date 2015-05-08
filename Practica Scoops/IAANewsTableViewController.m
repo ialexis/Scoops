@@ -99,17 +99,70 @@
 }
 
 -(void) addLogOffButton{
-    //añadirmos esta linea para que muestre el boton de editar
+    
+    
+    UIBarButtonItem *addAcc = [[UIBarButtonItem alloc]
+                               initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewNews)];
+    
     UIBarButtonItem* LogoffButton = [[UIBarButtonItem alloc]initWithTitle:@"Logoff" style:UIBarButtonItemStylePlain target:self action:@selector(logOff)];
-    self.navigationItem.rightBarButtonItem = LogoffButton;
+    
+    NSArray *arrBtns = [[NSArray alloc]initWithObjects:addAcc,LogoffButton, nil];
+    self.navigationItem.rightBarButtonItems = arrBtns;
+    
+    
+    
+    //añadirmos esta linea para que muestre el boton de editar
+    
+  //  self.navigationItem.rightBarButtonItem = LogoffButton;
     
 }
 -(void) addLogInButton{
+    
+    UIBarButtonItem *addAcc = [[UIBarButtonItem alloc]
+                               initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewNews)];
     //añadirmos esta linea para que muestre el boton de editar
     UIBarButtonItem* LogoffButton = [[UIBarButtonItem alloc]initWithTitle:@"Login" style:UIBarButtonItemStylePlain target:self action:@selector(loginFB)];
-    self.navigationItem.rightBarButtonItem = LogoffButton;
+    //self.navigationItem.rightBarButtonItem = LogoffButton;
+    NSArray *arrBtns = [[NSArray alloc]initWithObjects:addAcc,LogoffButton, nil];
+    self.navigationItem.rightBarButtonItems = arrBtns;
 }
 
+-(void)addNewNews
+{
+    [self addNewsAzure];
+    [self addNewsModel];
+    [self.model loadNewsFromAzure];
+}
+
+-(void)addNewsAzure
+{
+   // client = [MSClient clientWithApplicationURL:[NSURL URLWithString:AZUREMOBILESERVICE_ENDPOINT]
+   //                              applicationKey:AZUREMOBILESERVICE_APPKEY];
+    
+    MSTable *news = [client tableWithName:@"news"];
+  
+    NSDictionary * scoop= @{@"Titulo" : @"sin titulo", @"noticia":@"sin contenido",@"author" : userFBId, @"status":@0};
+    
+    [news insert:scoop
+      completion:^(NSDictionary *item, NSError *error) {
+          if (error) {
+              NSLog(@"Error %@", error);
+          } else {
+              NSLog(@"OK");
+          }
+          
+          
+      }];
+    
+
+}
+
+-(void)addNewsModel
+{
+    IAAOneNew *noticia = [[IAAOneNew alloc]initWithTitle:@"sin titulo" aText:@"sin contenido"];
+    
+        [self.model.modelWrited addObject:noticia];
+}
 
 -(void) newModels
 {
@@ -158,6 +211,10 @@
 
 -(NSString *) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
+    //si la seccion esta vacia, no publicamos titulo
+    if ([tableView.dataSource tableView:tableView numberOfRowsInSection:section] == 0) {
+        return nil;
+    }
     
     if (section==SECTION_NEWS_WRITED)
     {
@@ -216,7 +273,7 @@
     //Configurar la celta
     //sincronizacmos modelo (personaje) con la vista (la celda)
     
-    //cell.imageView.image = character.photo;
+    cell.imageView.image = oneNew.imagenNoticia;
     cell.textLabel.text=oneNew.title;
     cell.detailTextLabel.text=oneNew.text;
     

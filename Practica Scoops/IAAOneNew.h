@@ -22,6 +22,9 @@
     andCreationDate:(NSDate *) creationDate
 andModificationDate:(NSDate *) modifDate;
 
+
+- (id)initWithTitle:(NSString*)title
+              aText:(NSString*)text;
 @property (readonly) NSString *id;
 @property (strong, nonatomic) NSString *title;
 @property (strong, nonatomic) NSString *text;

@@ -14,9 +14,9 @@
 #define TITLE_NEWS_WRITED @"Noticias Escritas"
 #define TITLE_NEWS_REVIEWED @"Noticias Revisadas"
 #define TITLE_NEWS_PUBLISED @"Noticias Publicadas"
-#define SECTION_NEWS_WRITED 0
+#define SECTION_NEWS_WRITED 2
 #define SECTION_NEWS_REVIEWED 1
-#define SECTION_NEWS_PUBLISED 2
+#define SECTION_NEWS_PUBLISED 0
 #define DID_NEW_NEWS_NOTIFICATION_NAME @"NEW_NEWS"
 
 

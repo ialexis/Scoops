@@ -16,10 +16,11 @@
 @implementation IAAPhotoViewController
 
 #pragma mark - Init
--(id) initWithImage:(UIImage*) imagen{
+-(id) initWithModel:(IAAOneNew*) model
+{
     if (self = [super initWithNibName:nil
                                bundle:nil]) {
-        _photo = imagen;
+        _model = model;
     }
     
     return self;
@@ -36,14 +37,14 @@
     
     
     // sincronizo modelo -> vista
-    self.photoImage.image = [self photo];
+    self.photoImage.image = [self.model imagenNoticia];
     
 }
 
 -(void) viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
 
-    self.photo = self.photoImage.image;
+    self.model.image = UIImageJPEGRepresentation(self.photoImage.image,9);
 }
 
 
@@ -121,7 +122,8 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info{
     
     
     // La guardo en el modelo
-  //  [self.photo setImage:img];
+    self.photoImage.image=img;
+    self.model.image = UIImageJPEGRepresentation(img, 9);
     
     //pongo a nil la imagen para liberar memoria
     img = nil;

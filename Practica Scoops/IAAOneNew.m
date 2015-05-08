@@ -37,6 +37,11 @@ andModificationDate:(NSDate *) modifDate
     
 }
 
+- (id)initWithTitle:(NSString*)title
+              aText:(NSString*)text
+{
+    return [self initWithTitle:title andID:nil andPhoto:nil aText:text andAuthor:nil andCoor:CLLocationCoordinate2DMake(0, 0)  andStatus:@0 andCreationDate:nil andModificationDate:nil];
+}
 
 -(UIImage *)imagenNoticia{
     
