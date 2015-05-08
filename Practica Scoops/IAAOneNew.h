@@ -18,6 +18,7 @@
               aText:(NSString*)text
           andAuthor:(NSString *)author
             andCoor:(CLLocationCoordinate2D) coors
+          andStatus:(NSNumber *) status
     andCreationDate:(NSDate *) creationDate
 andModificationDate:(NSDate *) modifDate;
 
@@ -25,6 +26,7 @@ andModificationDate:(NSDate *) modifDate;
 @property (strong, nonatomic) NSString *title;
 @property (strong, nonatomic) NSString *text;
 @property (strong, nonatomic) NSString *author;
+@property (strong, nonatomic) NSNumber *status;
 @property (nonatomic) CLLocationCoordinate2D coors;
 @property (strong, nonatomic) NSData *image;
 @property (readonly) NSDate *dateCreated;

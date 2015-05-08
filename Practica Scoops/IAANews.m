@@ -21,7 +21,7 @@
     
     if (self = [super init])
     {
-        [self loadNewsFromAzure];
+       // [self loadNewsFromAzure];
     }
     return self;
 }
@@ -75,30 +75,30 @@
            //                       CLLocationCoordinate2DMake(0, 0)];
             
             
-            IAAOneNew *noticia = [[IAAOneNew alloc]initWithTitle:item[@"Titulo"] andID:item[@"id"] andPhoto:nil  aText:item[@"noticia"] andAuthor:item[@"author"] andCoor: CLLocationCoordinate2DMake(0, 0) andCreationDate:item[@"__createdAt"]  andModificationDate:item[@"__updatedAt"] ];
+            IAAOneNew *noticia = [[IAAOneNew alloc]initWithTitle:item[@"Titulo"] andID:item[@"id"] andPhoto:nil  aText:item[@"noticia"] andAuthor:item[@"author"] andCoor: CLLocationCoordinate2DMake(0, 0) andStatus:item[@"status"] andCreationDate:item[@"__createdAt"]  andModificationDate:item[@"__updatedAt"] ];
             
             
-            NSString* status = item[@"status"];
+            NSNumber* status = item[@"status"];
             
             if (status == [NSNull null])
             {
-                status=@"<null>";
+                status=@0;
             }
             
-            if ([status isEqualToString:@"<null>"])
-            {
-                [self.modelWrited addObject:noticia];
-            }
-            if ([status isEqualToString:@"0"])
+          //  if ([status isEqualToString:@"<null>"])
+          //  {
+          //      [self.modelWrited addObject:noticia];
+          //  }
+            if ([status  isEqual:@0])
             {
                 [self.modelWrited addObject:noticia];
             }
 
-            if ([status isEqualToString:@"1"])
+            if ([status  isEqual:@1])
             {
                 [self.modelReviewed addObject:noticia];
             }
-            if ([status isEqualToString:@"2"])
+            if ([status  isEqual:@2])
             {
                 [self.modelPublished addObject:noticia];
             }

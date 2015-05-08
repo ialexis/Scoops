@@ -25,4 +25,5 @@
 - (IAAOneNew *) newsReviwedAtIndex: (NSUInteger) index;
 - (IAAOneNew *) newsWritedAtIndex: (NSUInteger) index;
 
+- (void)loadNewsFromAzure;
 @end

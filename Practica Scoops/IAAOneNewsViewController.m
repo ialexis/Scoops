@@ -50,6 +50,19 @@
     
     
     
+    //status
+    if ([self.model.status  isEqual:@0])
+    {
+        [self.switchPublicada setOn:false];
+    }
+    else
+    {
+        [self.switchPublicada setOn:TRUE];
+    }
+    
+    //ponenoms el modo de no edicion
+    [self changeToNoEditMode];
+    
     //usuario
     if ([self loadUserAuthInfo])
     {
@@ -69,7 +82,7 @@
     }
     
 
-    [self changeToNoEditMode];
+ 
     
     
    
@@ -124,18 +137,20 @@
     tokenFB = [[NSUserDefaults standardUserDefaults]objectForKey:@"tokenFB"];
     
     if (userFBId) {
-        self.tituloNoticia.userInteractionEnabled=true;
-        self.textoNoticia.userInteractionEnabled=true;
-        self.imagenNoticia.userInteractionEnabled=true;
+        self.tituloNoticia.userInteractionEnabled=YES;
+        self.textoNoticia.userInteractionEnabled=YES;
+        self.imagenNoticia.userInteractionEnabled=YES;
+        self.switchPublicada.userInteractionEnabled=YES;
     }
     
     [self addSaveButton];
 }
 -(void) changeToNoEditMode
 {
-    self.tituloNoticia.userInteractionEnabled=false;
-    self.textoNoticia.userInteractionEnabled=false;
-    self.imagenNoticia.userInteractionEnabled=false;
+    self.tituloNoticia.userInteractionEnabled=NO;
+    self.textoNoticia.userInteractionEnabled=NO;
+    self.imagenNoticia.userInteractionEnabled=NO;
+    self.switchPublicada.userInteractionEnabled=NO;
     [self addEditButton];
 }
 
@@ -211,8 +226,14 @@
     
     MSTable *news = [self.client tableWithName:@"news"];
     
+    NSNumber *mystatus=@0;
+    if (self.switchPublicada.on)
+    {
+        mystatus=@1;
+    }
+    
     //NSDictionary * scoop= @{@"Titulo" : self.tituloNoticia.text, @"noticia" : self.textoNoticia.text,@"Imagen":self.imagenNoticia.image};
-    NSDictionary * scoop= @{@"id": self.model.id ,@"Titulo" : self.tituloNoticia.text, @"noticia" : self.textoNoticia.text,@"author" : userFBId};
+    NSDictionary * scoop= @{@"id": self.model.id ,@"Titulo" : self.tituloNoticia.text, @"noticia" : self.textoNoticia.text,@"author" : userFBId,@"status":mystatus};
     
     [news update:scoop completion:^(NSDictionary *item, NSError *error) {
         if (error) {

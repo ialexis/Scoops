@@ -52,7 +52,8 @@
 
 -(void) viewDidAppear:(BOOL)animated
 {
-    [self newModels];
+    [self.model loadNewsFromAzure];
+  //  [self newModels];
 }
 -(void) addPictureButtonWithUrlImage: (NSURL *) url
 {
@@ -112,6 +113,7 @@
 
 -(void) newModels
 {
+    //[self.model loadNewsFromAzure];
     [self.tableView reloadData];
 }
 

@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *labelFechaModificacion;
 @property (weak, nonatomic) IBOutlet UITextField *tituloNoticia;
 @property (weak, nonatomic) IBOutlet UITextView *textoNoticia;
+@property (weak, nonatomic) IBOutlet UISwitch *switchPublicada;
 
 @property (nonatomic,strong) IAAOneNew *model;
 @property (strong,nonatomic)   MSClient * client;

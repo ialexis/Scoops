@@ -17,6 +17,7 @@
               aText:(NSString*)text
           andAuthor:(NSString *)author
             andCoor:(CLLocationCoordinate2D) coors
+          andStatus:(NSNumber *) status
     andCreationDate:(NSDate *) creationDate
 andModificationDate:(NSDate *) modifDate
 { 
@@ -26,6 +27,7 @@ andModificationDate:(NSDate *) modifDate
         _text = text;
         _author = author;
         _coors = coors;
+        _status=status;
         _image = img;
         _dateCreated = creationDate;
         _dateModif = modifDate;
