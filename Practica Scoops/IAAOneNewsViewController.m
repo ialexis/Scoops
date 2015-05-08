@@ -132,6 +132,46 @@
     return self;
 }
 
+- (IBAction)changeRating:(id)sender {
+    
+    MSTable *table_comments = [self.client tableWithName:@"commets"];
+    
+    
+    //borramos los anteriores ratings de esa noticia
+    NSDictionary * scoopDelete= @{@"user" : userFBId, @"newsID":self.model.id};
+    [table_comments delete:scoopDelete
+                completion:^(NSDictionary *item, NSError *error) {
+                    if (error) {
+                        NSLog(@"Error %@", error);
+                    } else {
+                        NSLog(@"OK");
+                    }
+                    
+                    
+                }];
+
+    
+    
+ 
+    NSDictionary * scoop= @{@"user" : userFBId, @"newsID":self.model.id,@"rating" : [NSNumber numberWithFloat:self.sliderRating.value]};
+    
+    [table_comments insert:scoop
+      completion:^(NSDictionary *item, NSError *error) {
+          if (error) {
+              NSLog(@"Error %@", error);
+          } else {
+              NSLog(@"OK");
+          }
+          
+          
+      }];
+
+    
+    
+    
+    
+}
+
 #pragma mark - edit mode and no edit mode
 -(void) changeToEditMode
 {
@@ -283,4 +323,6 @@
     
     [self.navigationController pushViewController:photoVC animated:YES];
 }
+
+
 @end

@@ -16,17 +16,19 @@
            andPhoto:(NSData *)img
               aText:(NSString*)text
           andAuthor:(NSString *)author
-            andCoor:(CLLocationCoordinate2D) coors
+        andLatitude:(NSNumber *) latitude
+       andLongitude:(NSNumber *) longitude
           andStatus:(NSNumber *) status
     andCreationDate:(NSDate *) creationDate
 andModificationDate:(NSDate *) modifDate
-{ 
+{
     if (self = [super init]) {
         _id = ID;
         _title = title;
         _text = text;
         _author = author;
-        _coors = coors;
+        _latitude = latitude;
+        _longitude=longitude;
         _status=status;
         _image = img;
         _dateCreated = creationDate;
@@ -39,8 +41,13 @@ andModificationDate:(NSDate *) modifDate
 
 - (id)initWithTitle:(NSString*)title
               aText:(NSString*)text
+        andLatitude:(NSNumber*)latitude
+       andLongitude:(NSNumber*)longitude
 {
-    return [self initWithTitle:title andID:nil andPhoto:nil aText:text andAuthor:nil andCoor:CLLocationCoordinate2DMake(0, 0)  andStatus:@0 andCreationDate:nil andModificationDate:nil];
+
+    
+    
+    return [self initWithTitle:title andID:nil andPhoto:nil aText:text andAuthor:nil andLatitude:latitude andLongitude:longitude andStatus:@0 andCreationDate:nil andModificationDate:nil];
 }
 
 -(UIImage *)imagenNoticia{

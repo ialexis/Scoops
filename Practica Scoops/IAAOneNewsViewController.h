@@ -20,8 +20,10 @@
 @property (weak, nonatomic) IBOutlet UITextView *textoNoticia;
 @property (weak, nonatomic) IBOutlet UISwitch *switchPublicada;
 
+@property (weak, nonatomic) IBOutlet UISlider *sliderRating;
 @property (nonatomic,strong) IAAOneNew *model;
 @property (strong,nonatomic)   MSClient * client;
 -(id) initWithModel: (IAAOneNew *) model andClient: (MSClient *) client;
+- (IBAction)changeRating:(id)sender;
 
 @end

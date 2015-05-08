@@ -156,7 +156,10 @@
              NSLog(@"item -> %@", item);
              
              
-             IAAOneNew *noticia = [[IAAOneNew alloc]initWithTitle:item[@"Titulo"] andID:item[@"id"] andPhoto:nil  aText:item[@"noticia"] andAuthor:item[@"author"] andCoor: CLLocationCoordinate2DMake(0, 0) andStatus:item[@"status"] andCreationDate:item[@"__createdAt"]  andModificationDate:item[@"__updatedAt"] ];
+             IAAOneNew *noticia = [[IAAOneNew alloc]initWithTitle:item[@"Titulo"] andID:item[@"id"] andPhoto:nil  aText:item[@"noticia"] andAuthor:item[@"author"] andLatitude:item[@"latitude"] andLongitude:item[@"longitude"] andStatus:item[@"status"] andCreationDate:item[@"__createdAt"]  andModificationDate:item[@"__updatedAt"] ];
+             
+             
+             
              
              
              [self.modelPublished addObject:noticia];
@@ -192,7 +195,9 @@
             NSLog(@"item -> %@", item);
             
             
-            IAAOneNew *noticia = [[IAAOneNew alloc]initWithTitle:item[@"Titulo"] andID:item[@"id"] andPhoto:nil  aText:item[@"noticia"] andAuthor:item[@"author"] andCoor: CLLocationCoordinate2DMake(0, 0) andStatus:item[@"status"] andCreationDate:item[@"__createdAt"]  andModificationDate:item[@"__updatedAt"] ];
+            
+            
+            IAAOneNew *noticia = [[IAAOneNew alloc]initWithTitle:item[@"Titulo"] andID:item[@"id"] andPhoto:nil  aText:item[@"noticia"] andAuthor:item[@"author"] andLatitude:item[@"latitude"] andLongitude:item[@"longitude"] andStatus:item[@"status"] andCreationDate:item[@"__createdAt"]  andModificationDate:item[@"__updatedAt"] ];
             
             
             [self.modelReviewed addObject:noticia];
@@ -230,7 +235,9 @@
              NSLog(@"item -> %@", item);
              
              
-             IAAOneNew *noticia = [[IAAOneNew alloc]initWithTitle:item[@"Titulo"] andID:item[@"id"] andPhoto:nil  aText:item[@"noticia"] andAuthor:item[@"author"] andCoor: CLLocationCoordinate2DMake(0, 0) andStatus:item[@"status"] andCreationDate:item[@"__createdAt"]  andModificationDate:item[@"__updatedAt"] ];
+
+             
+             IAAOneNew *noticia = [[IAAOneNew alloc]initWithTitle:item[@"Titulo"] andID:item[@"id"] andPhoto:nil  aText:item[@"noticia"] andAuthor:item[@"author"] andLatitude:item[@"latitude"] andLongitude:item[@"longitude"] andStatus:item[@"status"] andCreationDate:item[@"__createdAt"]  andModificationDate:item[@"__updatedAt"] ];
              
              
              [self.modelWrited addObject:noticia];

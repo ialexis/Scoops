@@ -18,6 +18,7 @@
     MSClient * client;
     NSString *userFBId;
     NSString *tokenFB;
+    
 }
 
 @end
@@ -139,9 +140,27 @@
    // client = [MSClient clientWithApplicationURL:[NSURL URLWithString:AZUREMOBILESERVICE_ENDPOINT]
    //                              applicationKey:AZUREMOBILESERVICE_APPKEY];
     
+    
+    
+    // localizacion
+    
+    self.locationManager = [[CLLocationManager alloc] init];
+    self.locationManager.delegate = self;
+    [self.locationManager requestAlwaysAuthorization];
+    CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
+    if (status == kCLAuthorizationStatusNotDetermined) {
+        
+        [self.locationManager requestWhenInUseAuthorization];
+    }
+    
+    [self.locationManager startUpdatingLocation];
+
+    NSNumber *latitude=[NSNumber numberWithDouble:self.location.coordinate.latitude];
+    NSNumber *longitude=[NSNumber numberWithDouble:self.location.coordinate.longitude];
+    
     MSTable *news = [client tableWithName:@"news"];
   
-    NSDictionary * scoop= @{@"Titulo" : @"sin titulo", @"noticia":@"sin contenido",@"author" : userFBId, @"status":@0};
+    NSDictionary * scoop= @{@"Titulo" : @"sin titulo", @"noticia":@"sin contenido",@"author" : userFBId, @"status":@0, @"latitude":latitude, @"longitude":longitude};
     
     [news insert:scoop
       completion:^(NSDictionary *item, NSError *error) {
@@ -159,7 +178,10 @@
 
 -(void)addNewsModel
 {
-    IAAOneNew *noticia = [[IAAOneNew alloc]initWithTitle:@"sin titulo" aText:@"sin contenido"];
+    NSNumber *latitude=[NSNumber numberWithDouble:self.location.coordinate.latitude];
+    NSNumber *longitude=[NSNumber numberWithDouble:self.location.coordinate.longitude];
+
+    IAAOneNew *noticia = [[IAAOneNew alloc]initWithTitle:@"sin titulo" aText:@"sin contenido" andLatitude:latitude andLongitude:longitude];
     
         [self.model.modelWrited addObject:noticia];
 }
@@ -531,5 +553,19 @@
         
     }];
 }
+
+
+#pragma mark - CLLocationManagerDelegate
+-(void) locationManager:(CLLocationManager *)manager
+     didUpdateLocations:(NSArray *)locations{
+    
+    
+    // Recupero la última localización
+    self.location = [locations lastObject];
+    
+    NSLog(@"%f, %f", self.location.coordinate.latitude, self.location.coordinate.longitude);
+    
+}
+
 
 @end
