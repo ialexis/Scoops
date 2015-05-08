@@ -51,7 +51,8 @@
     self.labelFechaCreacion.text = [fmt stringFromDate:self.model.dateCreated];
     self.labelFechaModificacion.text = [fmt stringFromDate:self.model.dateModif];
     
-    
+    //coordenadas
+    self.labelCoordenadas.text=[NSString stringWithFormat:@"Lat:%@, Long:%@",self.model.latitude,self.model.longitude];
     
     //status
     if ([self.model.status  isEqual:@0])

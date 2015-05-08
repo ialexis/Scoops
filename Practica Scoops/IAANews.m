@@ -147,7 +147,7 @@
     MSQuery *queryModel = [[MSQuery alloc]initWithTable:table predicate:predicate];
     
     
-    queryModel.selectFields = @[@"id",@"Titulo", @"noticia",@"author",@"status" ,@"__createdAt",@"__updatedAt"];
+        queryModel.selectFields = @[@"id",@"Titulo", @"noticia",@"author",@"status" ,@"__createdAt",@"__updatedAt",@"latitude",@"longitude"];
     
     [queryModel readWithCompletion:^(NSArray *items, NSInteger totalCount, NSError *error)
      {
@@ -186,7 +186,7 @@
     MSQuery *queryModel = [[MSQuery alloc]initWithTable:table predicate:predicate];
     
     
-    queryModel.selectFields = @[@"id",@"Titulo", @"noticia",@"author",@"status" ,@"__createdAt",@"__updatedAt"];
+    queryModel.selectFields = @[@"id",@"Titulo", @"noticia",@"author",@"status" ,@"__createdAt",@"__updatedAt",@"latitude",@"longitude"];
     
     [queryModel readWithCompletion:^(NSArray *items, NSInteger totalCount, NSError *error)
     {
@@ -226,7 +226,7 @@
     MSQuery *queryModel = [[MSQuery alloc]initWithTable:table predicate:predicate];
     
     
-    queryModel.selectFields = @[@"id",@"Titulo", @"noticia",@"author",@"status" ,@"__createdAt",@"__updatedAt"];
+    queryModel.selectFields = @[@"id",@"Titulo", @"noticia",@"author",@"status" ,@"__createdAt",@"__updatedAt",@"latitude",@"longitude"];
     
     [queryModel readWithCompletion:^(NSArray *items, NSInteger totalCount, NSError *error)
      {
