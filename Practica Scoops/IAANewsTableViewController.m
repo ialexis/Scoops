@@ -71,7 +71,7 @@
             face.bounds = CGRectMake( 0, 0, imagenPerfil.size.width, imagenPerfil.size.height );
             face.layer.cornerRadius = imagenPerfil.size.width / 2;
             [face setImage:imagenPerfil forState:UIControlStateNormal];
-            
+            face.clipsToBounds = YES;
             UIBarButtonItem *faceBtn = [[UIBarButtonItem alloc] initWithCustomView:face];
             
             
@@ -228,7 +228,7 @@
     IAAOneNew *noticia = [self noticiaAtIndexPath:indexPath];
     
     // Crear el controlador
-    IAAOneNewsViewController *nVC = [[IAAOneNewsViewController alloc] initWithModel:noticia];
+    IAAOneNewsViewController *nVC = [[IAAOneNewsViewController alloc] initWithModel:noticia andClient:client];
     
     // Hacer el push
     [self.navigationController pushViewController:nVC

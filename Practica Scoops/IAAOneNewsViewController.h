@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <WindowsAzureMobileServices/WindowsAzureMobileServices.h>
 @class IAAOneNew;
 
 @interface IAAOneNewsViewController : UIViewController
@@ -19,7 +20,7 @@
 @property (weak, nonatomic) IBOutlet UITextView *textoNoticia;
 
 @property (nonatomic,strong) IAAOneNew *model;
-
--(id) initWithModel: (IAAOneNew *) model;
+@property (strong,nonatomic)   MSClient * client;
+-(id) initWithModel: (IAAOneNew *) model andClient: (MSClient *) client;
 
 @end

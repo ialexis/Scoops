@@ -10,11 +10,10 @@
 #import "IAAPhotoViewController.h"
 #import "IAAOneNew.h"
 #import "IAASettings.h"
-#import <WindowsAzureMobileServices/WindowsAzureMobileServices.h>
+
 
 @interface IAAOneNewsViewController ()
 {
-    MSClient * client;
     NSString *userFBId;
     NSString *tokenFB;
 }
@@ -34,6 +33,7 @@
 }
 -(void) viewWillAppear:(BOOL)animated
 {
+    
     self.tituloNoticia.text = self.model.title;
     self.textoNoticia.text=self.model.text;
     self.imagenNoticia.image = self.model.imagenNoticia;
@@ -48,6 +48,26 @@
     self.labelFechaCreacion.text = [fmt stringFromDate:self.model.dateCreated];
     self.labelFechaModificacion.text = [fmt stringFromDate:self.model.dateModif];
     
+    
+    
+    //usuario
+    if ([self loadUserAuthInfo])
+    {
+        if (self.client.currentUser){
+            [self.client invokeAPI:@"getCurrentUserInfo" body:nil HTTPMethod:@"GET" parameters:nil headers:nil completion:^(id result, NSHTTPURLResponse *response, NSError *error) {
+            
+                //tenemos info extra del usuario
+                NSLog(@"%@", result);
+                //self.profilePicture =
+                self.labelNombreAutor.text = result[@"name"];
+                [self authorPictureWithUrlImage:[NSURL URLWithString:result[@"picture"][@"data"][@"url"]]];
+            
+            }];
+        
+            return;
+        }
+    }
+    
 
     [self changeToNoEditMode];
     
@@ -55,12 +75,39 @@
    
 }
 
--(id) initWithModel: ( IAAOneNew*) model
+-(void) authorPictureWithUrlImage: (NSURL *) url
+{
+    
+    dispatch_queue_t queue = dispatch_queue_create("descargaImagenes", DISPATCH_QUEUE_SERIAL);
+    
+    dispatch_async(queue, ^{
+        
+        NSData *buff = [NSData dataWithContentsOfURL:url];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            UIImage *imagenPerfil=[UIImage imageWithData:buff];
+
+            //self.imagenAutor.bounds = CGRectMake( 0, 0, self.imagenAutor.image.size.width, self.imagenAutor.image.size.height );
+            self.imagenAutor.layer.cornerRadius = self.imagenAutor.frame.size.width / 2;
+            
+            self.imagenAutor.image = imagenPerfil;
+            self.imagenAutor.clipsToBounds = YES;
+            
+          //  self.picProfile.image = [UIImage imageWithData:buff];
+          //  self.picProfile.layer.cornerRadius = self.picProfile.frame.size.width / 2;
+          //  self.picProfile.clipsToBounds = YES;
+            
+        });
+        
+    });
+    
+}
+
+-(id) initWithModel: (IAAOneNew *) model andClient: (MSClient *) client
 {
     if (self=[super initWithNibName:nil bundle:nil])
     {
         _model = model;
-        
+        _client= client;
         
         
         
@@ -139,10 +186,10 @@
     [self changeToNoEditMode];
 }
 - (void)addNewToAzure{
-     client = [MSClient clientWithApplicationURL:[NSURL URLWithString:AZUREMOBILESERVICE_ENDPOINT]
-                                             applicationKey:AZUREMOBILESERVICE_APPKEY];
+    // client = [MSClient clientWithApplicationURL:[NSURL URLWithString:AZUREMOBILESERVICE_ENDPOINT]
+    //                                         applicationKey:AZUREMOBILESERVICE_APPKEY];
     
-    MSTable *news = [client tableWithName:@"news"];
+    MSTable *news = [self.client tableWithName:@"news"];
 
         //NSDictionary * scoop= @{@"Titulo" : self.tituloNoticia.text, @"noticia" : self.textoNoticia.text,@"Imagen":self.imagenNoticia.image};
     NSDictionary * scoop= @{@"Titulo" : self.tituloNoticia.text, @"noticia" : self.textoNoticia.text};
@@ -159,13 +206,13 @@
       }];
 }
 - (void)editNewInAzure{
-   client = [MSClient clientWithApplicationURL:[NSURL URLWithString:AZUREMOBILESERVICE_ENDPOINT]
-                                             applicationKey:AZUREMOBILESERVICE_APPKEY];
+ //  client = [MSClient clientWithApplicationURL:[NSURL URLWithString:AZUREMOBILESERVICE_ENDPOINT]
+ //                                            applicationKey:AZUREMOBILESERVICE_APPKEY];
     
-    MSTable *news = [client tableWithName:@"news"];
+    MSTable *news = [self.client tableWithName:@"news"];
     
     //NSDictionary * scoop= @{@"Titulo" : self.tituloNoticia.text, @"noticia" : self.textoNoticia.text,@"Imagen":self.imagenNoticia.image};
-    NSDictionary * scoop= @{@"id": self.model.id ,@"Titulo" : self.tituloNoticia.text, @"noticia" : self.textoNoticia.text};
+    NSDictionary * scoop= @{@"id": self.model.id ,@"Titulo" : self.tituloNoticia.text, @"noticia" : self.textoNoticia.text,@"author" : userFBId};
     
     [news update:scoop completion:^(NSDictionary *item, NSError *error) {
         if (error) {
@@ -191,4 +238,21 @@
     }];
 }
 
+
+- (BOOL)loadUserAuthInfo{
+    
+    userFBId = [[NSUserDefaults standardUserDefaults]objectForKey:@"userID"];
+    tokenFB = [[NSUserDefaults standardUserDefaults]objectForKey:@"tokenFB"];
+    
+    if (userFBId) {
+        self.client.currentUser = [[MSUser alloc]initWithUserId:userFBId];
+        self.client.currentUser.mobileServiceAuthenticationToken = [[NSUserDefaults standardUserDefaults]objectForKey:@"tokenFB"];
+        
+        
+        
+        return TRUE;
+    }
+    
+    return FALSE;
+}
 @end
