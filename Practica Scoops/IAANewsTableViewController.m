@@ -47,6 +47,22 @@
     [self loadUserdata];
    // [self loginFB];
     
+    
+    
+    // Activamos la localizacion
+    CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
+    if (status == kCLAuthorizationStatusNotDetermined) {
+        
+        [self.locationManager requestWhenInUseAuthorization];
+    }
+    
+
+    self.locationManager = [[CLLocationManager alloc] init];
+    self.locationManager.delegate = self;
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    [self.locationManager requestAlwaysAuthorization];
+    
+    [self.locationManager startUpdatingLocation];
 
     
 }
@@ -122,9 +138,9 @@
     UIBarButtonItem *addAcc = [[UIBarButtonItem alloc]
                                initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewNews)];
     //añadirmos esta linea para que muestre el boton de editar
-    UIBarButtonItem* LogoffButton = [[UIBarButtonItem alloc]initWithTitle:@"Login" style:UIBarButtonItemStylePlain target:self action:@selector(loginFB)];
+    UIBarButtonItem* LogInButton = [[UIBarButtonItem alloc]initWithTitle:@"Login" style:UIBarButtonItemStylePlain target:self action:@selector(loginFB)];
     //self.navigationItem.rightBarButtonItem = LogoffButton;
-    NSArray *arrBtns = [[NSArray alloc]initWithObjects:addAcc,LogoffButton, nil];
+    NSArray *arrBtns = [[NSArray alloc]initWithObjects:LogInButton, nil];
     self.navigationItem.rightBarButtonItems = arrBtns;
 }
 
@@ -137,23 +153,9 @@
 
 -(void)addNewsAzure
 {
-   // client = [MSClient clientWithApplicationURL:[NSURL URLWithString:AZUREMOBILESERVICE_ENDPOINT]
-   //                              applicationKey:AZUREMOBILESERVICE_APPKEY];
     
     
-    
-    // localizacion
-    
-    self.locationManager = [[CLLocationManager alloc] init];
-    self.locationManager.delegate = self;
-    [self.locationManager requestAlwaysAuthorization];
-    CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
-    if (status == kCLAuthorizationStatusNotDetermined) {
-        
-        [self.locationManager requestWhenInUseAuthorization];
-    }
-    
-    [self.locationManager startUpdatingLocation];
+
 
     NSNumber *latitude=[NSNumber numberWithDouble:self.location.coordinate.latitude];
     NSNumber *longitude=[NSNumber numberWithDouble:self.location.coordinate.longitude];
@@ -556,10 +558,14 @@
 
 
 #pragma mark - CLLocationManagerDelegate
+
+
 -(void) locationManager:(CLLocationManager *)manager
      didUpdateLocations:(NSArray *)locations{
     
     
+    [self.locationManager stopUpdatingLocation];
+    self.locationManager = nil;
     // Recupero la última localización
     self.location = [locations lastObject];
     

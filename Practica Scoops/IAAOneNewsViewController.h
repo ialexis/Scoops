@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UITextView *textoNoticia;
 @property (weak, nonatomic) IBOutlet UISwitch *switchPublicada;
 @property (weak, nonatomic) IBOutlet UILabel *labelCoordenadas;
+@property (weak, nonatomic) IBOutlet UILabel *labelPuntuacion;
 
 @property (weak, nonatomic) IBOutlet UISlider *sliderRating;
 @property (nonatomic,strong) IAAOneNew *model;

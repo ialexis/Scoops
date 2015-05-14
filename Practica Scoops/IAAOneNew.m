@@ -21,6 +21,7 @@
           andStatus:(NSNumber *) status
     andCreationDate:(NSDate *) creationDate
 andModificationDate:(NSDate *) modifDate
+          andRating:(NSNumber *) rating
 {
     if (self = [super init]) {
         _id = ID;
@@ -33,6 +34,7 @@ andModificationDate:(NSDate *) modifDate
         _image = img;
         _dateCreated = creationDate;
         _dateModif = modifDate;
+        _rating = rating;
     }
     
     return self;
@@ -47,7 +49,7 @@ andModificationDate:(NSDate *) modifDate
 
     
     
-    return [self initWithTitle:title andID:nil andPhoto:nil aText:text andAuthor:nil andLatitude:latitude andLongitude:longitude andStatus:@0 andCreationDate:nil andModificationDate:nil];
+    return [self initWithTitle:title andID:nil andPhoto:nil aText:text andAuthor:nil andLatitude:latitude andLongitude:longitude andStatus:@0 andCreationDate:nil andModificationDate:nil andRating:nil];
 }
 
 -(UIImage *)imagenNoticia{
@@ -64,7 +66,19 @@ andModificationDate:(NSDate *) modifDate
    
     return [UIImage imageWithData:self.image];
 }
-
+-(NSNumber *)puntuacion
+{
+    
+    if (self.rating == [NSNull null])
+    {
+        
+        // Load url image into NSData
+        return [NSNumber numberWithFloat:5.00f];
+    }
+    
+    
+    return self.rating;
+}
 
 
 #pragma mark - Overwritten

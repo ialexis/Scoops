@@ -147,7 +147,7 @@
     MSQuery *queryModel = [[MSQuery alloc]initWithTable:table predicate:predicate];
     
     
-        queryModel.selectFields = @[@"id",@"Titulo", @"noticia",@"author",@"status" ,@"__createdAt",@"__updatedAt",@"latitude",@"longitude"];
+        queryModel.selectFields = @[@"id",@"Titulo", @"noticia",@"author",@"status" ,@"__createdAt",@"__updatedAt",@"latitude",@"longitude",@"rating"];
     
     [queryModel readWithCompletion:^(NSArray *items, NSInteger totalCount, NSError *error)
      {
@@ -156,7 +156,7 @@
              NSLog(@"item -> %@", item);
              
              
-             IAAOneNew *noticia = [[IAAOneNew alloc]initWithTitle:item[@"Titulo"] andID:item[@"id"] andPhoto:nil  aText:item[@"noticia"] andAuthor:item[@"author"] andLatitude:item[@"latitude"] andLongitude:item[@"longitude"] andStatus:item[@"status"] andCreationDate:item[@"__createdAt"]  andModificationDate:item[@"__updatedAt"] ];
+             IAAOneNew *noticia = [[IAAOneNew alloc]initWithTitle:item[@"Titulo"] andID:item[@"id"] andPhoto:nil  aText:item[@"noticia"] andAuthor:item[@"author"] andLatitude:item[@"latitude"] andLongitude:item[@"longitude"] andStatus:item[@"status"] andCreationDate:item[@"__createdAt"]  andModificationDate:item[@"__updatedAt"] andRating:item[@"rating"] ];
              
              
              
@@ -197,7 +197,7 @@
             
             
             
-            IAAOneNew *noticia = [[IAAOneNew alloc]initWithTitle:item[@"Titulo"] andID:item[@"id"] andPhoto:nil  aText:item[@"noticia"] andAuthor:item[@"author"] andLatitude:item[@"latitude"] andLongitude:item[@"longitude"] andStatus:item[@"status"] andCreationDate:item[@"__createdAt"]  andModificationDate:item[@"__updatedAt"] ];
+            IAAOneNew *noticia = [[IAAOneNew alloc]initWithTitle:item[@"Titulo"] andID:item[@"id"] andPhoto:nil  aText:item[@"noticia"] andAuthor:item[@"author"] andLatitude:item[@"latitude"] andLongitude:item[@"longitude"] andStatus:item[@"status"] andCreationDate:item[@"__createdAt"]  andModificationDate:item[@"__updatedAt"]andRating:item[@"rating"]];
             
             
             [self.modelReviewed addObject:noticia];
@@ -237,7 +237,7 @@
              
 
              
-             IAAOneNew *noticia = [[IAAOneNew alloc]initWithTitle:item[@"Titulo"] andID:item[@"id"] andPhoto:nil  aText:item[@"noticia"] andAuthor:item[@"author"] andLatitude:item[@"latitude"] andLongitude:item[@"longitude"] andStatus:item[@"status"] andCreationDate:item[@"__createdAt"]  andModificationDate:item[@"__updatedAt"] ];
+             IAAOneNew *noticia = [[IAAOneNew alloc]initWithTitle:item[@"Titulo"] andID:item[@"id"] andPhoto:nil  aText:item[@"noticia"] andAuthor:item[@"author"] andLatitude:item[@"latitude"] andLongitude:item[@"longitude"] andStatus:item[@"status"] andCreationDate:item[@"__createdAt"]  andModificationDate:item[@"__updatedAt"]andRating:item[@"rating"]];
              
              
              [self.modelWrited addObject:noticia];

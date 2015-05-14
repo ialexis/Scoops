@@ -21,7 +21,8 @@
        andLongitude:(NSNumber *) longitude
           andStatus:(NSNumber *) status
     andCreationDate:(NSDate *) creationDate
-andModificationDate:(NSDate *) modifDate;
+andModificationDate:(NSDate *) modifDate
+          andRating:(NSNumber*) rating;
 
 
 - (id)initWithTitle:(NSString*)title
@@ -36,10 +37,12 @@ andModificationDate:(NSDate *) modifDate;
 @property (strong, nonatomic) NSNumber *status;
 @property (strong, nonatomic) NSNumber *latitude;
 @property (strong, nonatomic) NSNumber *longitude;
+@property (strong, nonatomic) NSNumber *rating;
 @property (strong, nonatomic) NSData *image;
 @property (readonly) NSDate *dateCreated;
 @property (readonly) NSDate *dateModif;
 @property (nonatomic, strong, readonly) UIImage *imagenNoticia;
+@property (nonatomic, strong, readonly) NSNumber *puntuacion;
 
 
 @end

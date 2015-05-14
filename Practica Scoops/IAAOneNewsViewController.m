@@ -37,7 +37,8 @@
     self.tituloNoticia.text = self.model.title;
     self.textoNoticia.text=self.model.text;
     self.imagenNoticia.image = self.model.imagenNoticia;
-    
+    self.labelPuntuacion.text = [self.model.puntuacion stringValue];
+    self.sliderRating.value = [self.model.puntuacion floatValue];
     
     //tap en foto
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectPhoto:)];
@@ -137,7 +138,7 @@
     
     MSTable *table_comments = [self.client tableWithName:@"commets"];
     
-    
+    /*
     //borramos los anteriores ratings de esa noticia
     NSDictionary * scoopDelete= @{@"user" : userFBId, @"newsID":self.model.id};
     [table_comments delete:scoopDelete
@@ -152,9 +153,9 @@
                 }];
 
     
-    
+    */
  
-    NSDictionary * scoop= @{@"user" : userFBId, @"newsID":self.model.id,@"rating" : [NSNumber numberWithFloat:self.sliderRating.value]};
+    NSDictionary * scoop= @{@"userID" : userFBId, @"newsID":self.model.id,@"rating" : [NSNumber numberWithFloat:self.sliderRating.value]};
     
     [table_comments insert:scoop
       completion:^(NSDictionary *item, NSError *error) {
@@ -163,14 +164,7 @@
           } else {
               NSLog(@"OK");
           }
-          
-          
       }];
-
-    
-    
-    
-    
 }
 
 #pragma mark - edit mode and no edit mode
@@ -195,7 +189,18 @@
     self.textoNoticia.userInteractionEnabled=NO;
     self.imagenNoticia.userInteractionEnabled=NO;
     self.switchPublicada.userInteractionEnabled=NO;
-    [self addEditButton];
+    
+    userFBId = [[NSUserDefaults standardUserDefaults]objectForKey:@"userID"];
+    tokenFB = [[NSUserDefaults standardUserDefaults]objectForKey:@"tokenFB"];
+    
+    if (userFBId) {
+        [self addEditButton];
+        self.sliderRating.userInteractionEnabled=YES;
+    }
+    else
+    {
+         self.sliderRating.userInteractionEnabled=NO;
+    }
 }
 
 
@@ -315,6 +320,8 @@
     
     return FALSE;
 }
+
+
 
 #pragma mark - Foto
 -(void) selectPhoto:(id) sender{
